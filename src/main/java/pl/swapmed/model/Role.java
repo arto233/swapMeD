@@ -22,5 +22,6 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+    @Column(unique = true)
     String name;
 }

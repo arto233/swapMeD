@@ -4,7 +4,9 @@ import pl.swapmed.model.User;
 
 public interface UserService {
 
-    User findByUserName(String name);
+    User findUserByUsername(String name);
+
+    User findUserByEmail(String email);
 
     void saveUser(User user);
 }

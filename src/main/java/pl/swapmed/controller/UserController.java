@@ -24,7 +24,10 @@ public class UserController {
     public String createUser() {
         User user = new User();
         user.setUsername("admin");
+        user.setEmail("admin@wp.pl");
         user.setPassword("admin");
+        user.setName("Admin");
+        user.setLastName("Adminowski");
         userService.saveUser(user);
         return "admin";
     }
