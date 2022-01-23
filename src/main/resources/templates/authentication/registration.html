@@ -1,10 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Registration</title>
 </head>
 <body>
-<div>To jest rejestracja</div>
+<header th:include="fragments/header"></header>
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img th:src="@{/img/Logo.png}" class="img-fluid"
+                     alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 ">
+                <form autocomplete="off" th:method="post" th:action="@{/registration}" th:object="${user}">
+
+                    <!-- Name input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example1" class="form-control form-control-lg bg-light  rounded-5"
+                               placeholder="Wprowadź imię" th:field="*{name}" />
+                        <label class="form-label" for="form3Example1">Imię</label>
+                               <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"/>
+                    </div>
+
+                    <!-- Lastname input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example2" class="form-control form-control-lg bg-light  rounded-5"
+                               placeholder="Wprowadź nazwisko" th:field="*{lastName}" />
+                        <label class="form-label" for="form3Example2">Nazwisko</label>
+                               <span th:if="${#fields.hasErrors('lastName')}" th:erroclass="ui-state-error-text" th:errors="*{lastName}"/>
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="email" id="form3Example3" class="form-control form-control-lg bg-light  rounded-5"
+                               placeholder="Wprowadź email" th:field="*{email}" />
+                        <label class="form-label" for="form3Example3">Email</label>
+                               <span th:if="${#fields.hasErrors('email')}" th:erroclass="ui-state-error-text" th:errors="*{email}"/>
+                    </div>
+
+                    <!-- Username input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example4" class="form-control form-control-lg bg-light  rounded-5"
+                               placeholder="Wprowadź nazwę użytkownika" th:field="*{username}" />
+                        <label class="form-label" for="form3Example4">Nazwa użytkownika</label>
+                               <span th:if="${#fields.hasErrors('username')}" th:erroclass="ui-state-error-text" th:errors="*{username}"/>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input type="password" id="password" class="form-control form-control-lg bg-light  rounded-5"
+                               placeholder="Wprowadź hasło" th:field="*{password}" />
+                        <label class="form-label" for="password">Hasło</label>
+                               <span th:if="${#fields.hasErrors('password')}" th:erroclass="ui-state-error-text" th:errors="*{password}"/>
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-light btn-lg"
+                                style="background-color : #81dbe7; padding-left: 2.5rem; padding-right: 2.5rem;">Zarejestruj</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer th:include="fragments/footer"></footer>
+</section>
+
 </body>
 </html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+</head>
+<body>
+<header th:include="fragments/loggedHeader"></header>
+<section class="vh-100">
+
+    <a th:href="@{/duty/add}">Dodaj nowy grafik</a>
+
+    <h1>
+        <div>Lista moich grafików</div>
+    </h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Miesiąc</th>
+            <th scope="col">Nazwa placówki</th>
+            <th scope="col">Oddział</th>
+            <th scope="col">Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">Test</th>
+            <td>Styczeń</td>
+            <td>Szpital test</td>
+            <td>Oddział test</td>
+            <td>Akcje test</td>
+        </tr>
+        </tbody>
+    </table>
+    <footer th:include="fragments/footer"></footer>
+</section>
+
+</body>
+</html>
