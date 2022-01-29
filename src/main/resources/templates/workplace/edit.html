@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Workplace edit</title>
+</head>
+<body>
+<header th:include="fragments/loggedHeader"></header>
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5" style="font-size: 48px;">
+                <i class="fas fa-hospital fa-10x"></i>
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 ">
+                <form autocomplete="off" th:method="post" th:action="@{/workplace/{id}/edit(id=${workplace.id})}" th:object="${workplace}">
+
+                    <!-- City input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example1" class="form-control form-control-lg bg-light  rounded-5"
+                               placeholder="Wprowadź miasto" th:field="*{city}" th:value="${workplace.city}" />
+                        <label class="form-label" for="form3Example1">Miasto</label>
+                        <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}"/>
+                    </div>
+
+                    <!-- Name input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example2" class="form-control form-control-lg bg-light  rounded-5"
+                               placeholder="Wprowadź nazwę placówki" th:field="*{name}" th:value="${workplace.name}"/>
+                        <label class="form-label" for="form3Example2">Nazwa placówki</label>
+                        <span th:if="${#fields.hasErrors('name')}" th:erroclass="ui-state-error-text" th:errors="*{name}"/>
+                    </div>
+
+                    <!-- Address input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example3" class="form-control form-control-lg bg-light  rounded-5"
+                               placeholder="Wprowadź adres" th:field="*{address}" th:value="${workplace.address}"/>
+                        <label class="form-label" for="form3Example3">Adres</label>
+                        <span th:if="${#fields.hasErrors('address')}" th:erroclass="ui-state-error-text" th:errors="*{address}"/>
+                    </div>
+
+                    <!-- Division input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example4" class="form-control form-control-lg bg-light  rounded-5"
+                               placeholder="Wprowadź nazwę oddziału" th:field="*{division}" th:value="${workplace.division}"/>
+                        <label class="form-label" for="form3Example4">Oddział</label>
+                        <span th:if="${#fields.hasErrors('division')}" th:erroclass="ui-state-error-text" th:errors="*{division}"/>
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-light btn-lg"
+                                style="background-color : #81dbe7; padding-left: 2.5rem; padding-right: 2.5rem;">Edytuj</button>
+                        <a th:href="@{/dashboard}"><button type="button" class="btn btn-light btn-lg"
+                                                           style="background-color : #81dbe7; padding-left: 2.5rem; padding-right: 2.5rem;">Anuluj</button></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer th:include="fragments/footer"></footer>
+</section>
+
+</body>
+</html>

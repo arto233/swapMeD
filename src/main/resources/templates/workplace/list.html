@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups</title>
+</head>
+<body>
+<header th:include="fragments/loggedHeader"></header>
+<section class="vh-100">
+
+    <a th:href="@{/workplace/add}">Dodaj nową grupę</a>
+
+    <h1>
+        <div>Lista wszystkich grup zarejestrowanych w aplikacji</div>
+    </h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nazwa placówki</th>
+            <th scope="col">Adres</th>
+            <th scope="col">Miasto</th>
+            <th scope="col">Oddział</th>
+            <th scope="col">Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="workplace: ${workplaceList}">
+            <th th:text="${workplace.id}" scope="row"></th>
+            <td th:text="${workplace.name}"></td>
+            <td th:text="${workplace.address}"></td>
+            <td th:text="${workplace.city}"></td>
+            <td th:text="${workplace.division}"></td>
+            <td>
+
+                <span th:if="${workplaceUserList.isEmpty()}">
+                <a th:href="@{/workplace/{id}/add(id = ${workplace.id})}">
+                    <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding: 0.5rem;">Dołącz
+                    </button>
+                </a>
+                    </span>
+                <span th:unless="${workplaceUserList.isEmpty()}">
+                <span th:each="userWorkplace: ${workplaceUserList}">
+                <span th:unless="${workplace.id==userWorkplace.id}">
+                <a th:href="@{/workplace/{id}/add(id = ${workplace.id})}">
+                    <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding: 0.5rem;">Dołącz
+                    </button>
+                </a>
+                    </span>
+                    <span th:if="${workplace.id==userWorkplace.id}">
+                <a th:href="@{/workplace/{id}/delete-user(id = ${workplace.id})}">
+                    <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding: 0.5rem;">Opuść
+                    </button>
+                </a>
+                    </span>
+                    </span>
+                    </span>
+
+
+                <a th:href="@{/workplace/{id}(id = ${workplace.id})}">
+                    <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding: 0.5rem;">Szczegóły
+                    </button>
+                </a></td>
+        </tr>
+        </tbody>
+    </table>
+    <footer th:include="fragments/footer"></footer>
+</section>
+
+</body>
+</html>

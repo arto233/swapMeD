@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<header th:insert="fragments/loggedHeader"> </header>
+<h2>
+    <a th:text="${user.name}"></a>
+    <a>, to jest lista grup, do których należysz:</a>
+
+</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nazwa placówki</th>
+        <th scope="col">Oddział</th>
+        <th scope="col">Akcje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="workplace: ${workplaceUserList}">
+        <th th:text="${workplaceUserList.indexOf(workplace)+1}" scope="row"></th>
+        <td th:text="${workplace.name}"></td>
+        <td th:text="${workplace.division}"></td>
+        <td><a th:href="@{/workplace/{id}/delete-user(id = ${workplace.id})}">Opuść grupę</a>
+            <a th:href="@{/workplace/{id}(id = ${workplace.id})}">Szczegóły</a>
+            <a th:href="@{/workplace/{id}/schedule(id = ${workplace.id})}">Grafik</a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:insert="fragments/footer"></footer>
+</body>
+
+
+</html>

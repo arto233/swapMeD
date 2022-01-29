@@ -9,6 +9,8 @@ public interface DutyService {
 
     List<Duty> findAll();
 
+    List<Duty> findAllByScheduleId(Long scheduleId);
+
     void save(Duty duty);
 
     Optional<Duty> findById(Long id);

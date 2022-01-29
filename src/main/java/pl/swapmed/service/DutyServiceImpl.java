@@ -22,6 +22,11 @@ public class DutyServiceImpl implements DutyService{
     }
 
     @Override
+    public List<Duty> findAllByScheduleId(Long scheduleId) {
+        return dutyRepository.findAllBySchedule_Id(scheduleId);
+    }
+
+    @Override
     public void save(Duty duty) {
 dutyRepository.save(duty);
     }

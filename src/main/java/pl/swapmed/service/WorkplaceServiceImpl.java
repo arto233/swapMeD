@@ -38,5 +38,13 @@ public class WorkplaceServiceImpl implements WorkplaceService {
         workplaceRepository.deleteById(id);
     }
 
+    @Override
+    public List<Workplace> findByUsers_Id(Long userId) {
+        return workplaceRepository.findByUsers_Id(userId);
+    }
 
+    @Override
+    public void deleteUserFromWorkplace(Long userId, Long workplaceId) {
+        workplaceRepository.deleteUserFromWorkplace(userId, workplaceId);
+    }
 }

@@ -43,4 +43,9 @@ public class User {
     Set<Role> roles;
     @ManyToMany(mappedBy = "users")
     Set<Workplace> workplaces = new HashSet<>();
+
+    @ManyToMany(mappedBy = "users")//(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    Set<Schedule> schedules;
+
+
 }

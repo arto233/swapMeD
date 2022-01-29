@@ -8,4 +8,5 @@ import pl.swapmed.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findUserByUsername(String username);
     User findUserByEmail(String email);
+
 }

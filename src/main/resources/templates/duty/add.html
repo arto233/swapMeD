@@ -7,16 +7,31 @@
 </head>
 <body>
 <header th:include="fragments/loggedHeader"></header>
-<section class="vh-100">
 
-    <a th:href="@{/duty}">Wróć do listy grafików</a>
+<a th:href="@{/duty}">Wróć do listy grafików</a>
 
-    <h1>
-        <div>Formularz dodawania grafiku</div>
-    </h1>
+<h1>
+    <div>Formularz dodawania grafiku</div>
+</h1>
 
-    <footer th:include="fragments/footer"></footer>
-</section>
+<form th:object="${duty}"
+      th:action="@{/workplace/{id}/schedule/{scheduleId}/duty/add(id=${id}, scheduleId=${scheduleId})}"
+      th:method="post">
+    <label for="start-time">Data i godzina rozpoczęcia dyżuru:</label>
+
+    <input type="datetime-local" id="start-time"
+           th:field="*{{start}}" name="start"
+           min="2022-01-01T00:00" max="2030-12-31T23:59">
+
+    <label for="end-time">Data i godzina końca dyżuru</label>
+    <input type="datetime-local" id="end-time"
+           th:field="*{{end}}" name="end"
+           min="2022-01-01T00:00" max="2030-12-31T23:59">
+
+    <button type="submit">Dodaj dyżur</button>
+</form>
+
+<footer th:include="fragments/footer"></footer>
 
 </body>
 </html>

@@ -2,13 +2,29 @@ package pl.swapmed.controller;
 
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import pl.swapmed.model.Duty;
+import pl.swapmed.model.Schedule;
+import pl.swapmed.model.Workplace;
 import pl.swapmed.service.DutyService;
 import pl.swapmed.service.ScheduleService;
 import pl.swapmed.service.WorkplaceService;
 
+import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
+
 @Controller
+@RequestMapping("/workplace/{id}/schedule/{scheduleId}/duty")
 public class DutyController {
 
     private final DutyService dutyService;
@@ -24,17 +40,76 @@ public class DutyController {
         this.scheduleService = scheduleService;
     }
 
-    @GetMapping("/duty")
-    public ModelAndView myDuty() {
+    @GetMapping("")
+    public ModelAndView myDuty(@PathVariable Long id,
+                               @PathVariable Long scheduleId) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/duty/list");
+        Optional<Workplace> workplace = workplaceService.findById(id);
+        if (workplace.isPresent()) {
+            Optional<Schedule> schedule = scheduleService.findById(scheduleId);
+            if (schedule.isPresent()) {
+                List<Duty> dutyList = dutyService.findAllByScheduleId(scheduleId);
+                modelAndView.addObject("workplace", workplace);
+                modelAndView.addObject("schedule", schedule);
+                modelAndView.addObject("dutyList", dutyList);
+                modelAndView.setViewName("/duty/list");
+                return modelAndView;
+            }
+        }
+        modelAndView.setViewName("redirect:/error");
         return modelAndView;
     }
 
-    @GetMapping("/duty/add")
-    public ModelAndView addDuty() {
+    @GetMapping("/add")
+    public ModelAndView addDuty(@PathVariable Long id,
+                                @PathVariable Long scheduleId) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/duty/add");
+        Optional<Workplace> workplace = workplaceService.findById(id);
+        if (workplace.isPresent()) {
+            Optional<Schedule> schedule = scheduleService.findById(scheduleId);
+            if (schedule.isPresent()) {
+                modelAndView.addObject("workplace", workplace);
+                modelAndView.addObject("schedule", schedule);
+                modelAndView.addObject("duty", new Duty());
+                modelAndView.setViewName("/duty/add");
+                return modelAndView;
+            }
+        }
+        modelAndView.setViewName("redirect:/error");
         return modelAndView;
     }
+
+    @PostMapping("/add")
+    public ModelAndView addDutyToSchedule(@Valid Duty duty, BindingResult bindingResult,
+                                          @PathVariable Long id,
+                                          @PathVariable Long scheduleId) {
+        ModelAndView modelAndView = new ModelAndView();
+        Optional<Workplace> workplace = workplaceService.findById(id);
+        if (workplace.isPresent()) {
+            Optional<Schedule> schedule = scheduleService.findById(scheduleId);
+            if (schedule.isPresent()) {
+                /*
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String dutyStart = (String)model.getAttribute("start");
+                String newStart = dutyStart.replaceAll("T"," ");
+                String dutyEnd = (String)model.getAttribute("end");
+                String newEnd = dutyEnd.replaceAll("T"," ");
+                if(bindingResult.hasErrors()) {
+                    modelAndView.setViewName("/duty/add");
+                }
+
+                 */
+
+                duty.setStart(duty.getStart());
+                duty.setEnd(duty.getEnd());
+                duty.setSchedule(schedule.get());
+                dutyService.save(duty);
+                modelAndView.setViewName("/duty/add");
+                return modelAndView;
+            }
+        }
+        modelAndView.setViewName("redirect:/error");
+        return modelAndView;
+    }
+
 }

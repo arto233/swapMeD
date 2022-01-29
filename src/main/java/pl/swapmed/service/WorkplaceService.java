@@ -1,5 +1,6 @@
 package pl.swapmed.service;
 
+import org.hibernate.jdbc.Work;
 import pl.swapmed.model.Workplace;
 
 import java.util.List;
@@ -14,6 +15,11 @@ public interface WorkplaceService {
     Optional<Workplace> findById(Long id);
 
     void delete(Long id);
+
+    List<Workplace> findByUsers_Id(Long userId);
+
+    void deleteUserFromWorkplace(Long userId, Long workplaceId);
+
 
 
 

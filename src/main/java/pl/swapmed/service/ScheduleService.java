@@ -15,5 +15,9 @@ public interface ScheduleService {
 
     void delete(Long id);
 
+    List<Schedule> findByWorkplaceId(Long workplaceId);
+
+    Optional<Schedule> findScheduleByWorkplaceId(Long workplaceId);
+
 
 }

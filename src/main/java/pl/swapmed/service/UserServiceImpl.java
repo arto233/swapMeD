@@ -4,6 +4,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.swapmed.model.Role;
 import pl.swapmed.model.User;
+import pl.swapmed.model.Workplace;
 import pl.swapmed.repository.RoleRepository;
 import pl.swapmed.repository.UserRepository;
 
@@ -58,4 +59,5 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
+
 }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<header th:include="fragments/loggedHeader"></header>
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5" style="font-size: 48px;">
+                <i class="fas fa-hospital fa-10x"></i>
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 ">
+                    <!-- City -->
+                    <div class="form-outline mb-4">
+                        <div>Miasto</div>
+                        <div  id="Example1" class="form-control form-control-lg bg-light  rounded-5"
+                               th:text="${workplace.city}" />
+                        <!--<label class="form-label" for="Example1">Miasto</label>-->
+                    </div>
+
+                    <!-- Name -->
+                <div class="form-outline mb-4">
+                    <div>Nazwa</div>
+                    <div  id="Example2" class="form-control form-control-lg bg-light  rounded-5"
+                          th:text="${workplace.name}" />
+                    <label class="form-label" for="Example2"></label>
+                </div>
+
+                    <!-- Address -->
+                <div class="form-outline mb-4">
+                    <div>Adres</div>
+                    <div  id="Example3" class="form-control form-control-lg bg-light  rounded-5"
+                          th:text="${workplace.address}" />
+                    <label class="form-label" for="Example3"></label>
+                </div>
+
+                    <!-- Division -->
+                <div class="form-outline mb-4">
+                    <div>Grupa</div>
+                    <div  id="Example4" class="form-control form-control-lg bg-light  rounded-5"
+                          th:text="${workplace.division}" />
+                    <label class="form-label" for="Example4"></label>
+                </div>
+
+                    <a th:href="@{/workplace/{id}/edit(id = ${workplace.id})}">
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="button" class="btn btn-light btn-lg"
+                                style="background-color : #81dbe7; padding-left: 2.5rem; padding-right: 2.5rem;">Edytuj</button>
+                    </div>
+                    </a>
+            </div>
+        </div>
+    </div>
+    <footer th:include="fragments/footer"></footer>
+</section>
+
+</body>
+</html>

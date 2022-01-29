@@ -1,6 +1,7 @@
 package pl.swapmed.service;
 
 import pl.swapmed.model.User;
+import pl.swapmed.model.Workplace;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ public interface UserService {
     void saveUser(User user);
 
     void delete(Long id);
+
 
 
 

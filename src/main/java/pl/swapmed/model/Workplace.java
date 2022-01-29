@@ -27,7 +27,7 @@ public class Workplace {
     String address;
     @NotEmpty(message = "*Wprowadź nazwę oddziału")
     String division;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany//(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "workplace_user",
             joinColumns = @JoinColumn(name = "workplace_id"),
@@ -46,6 +46,7 @@ public class Workplace {
         this.users.remove(user);
         user.getWorkplaces().remove(this);
     }
+
 
     /*public void addUser(User user) {
         if(users == null) {
