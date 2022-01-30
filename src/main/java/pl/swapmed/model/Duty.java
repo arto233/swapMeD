@@ -20,9 +20,11 @@ public class Duty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Column(unique = true)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     LocalDateTime start;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Column(unique = true)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     LocalDateTime end;
     @ManyToOne
     @JoinColumn(name = "schedule_id")

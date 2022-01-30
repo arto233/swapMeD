@@ -68,7 +68,7 @@ public class DutyController {
         if (workplace.isPresent()) {
             Optional<Schedule> schedule = scheduleService.findById(scheduleId);
             if (schedule.isPresent()) {
-                modelAndView.addObject("workplace", workplace);
+                modelAndView.addObject("workplace", workplace.get());
                 modelAndView.addObject("schedule", schedule);
                 modelAndView.addObject("duty", new Duty());
                 modelAndView.setViewName("/duty/add");
@@ -88,18 +88,10 @@ public class DutyController {
         if (workplace.isPresent()) {
             Optional<Schedule> schedule = scheduleService.findById(scheduleId);
             if (schedule.isPresent()) {
-                /*
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                String dutyStart = (String)model.getAttribute("start");
-                String newStart = dutyStart.replaceAll("T"," ");
-                String dutyEnd = (String)model.getAttribute("end");
-                String newEnd = dutyEnd.replaceAll("T"," ");
-                if(bindingResult.hasErrors()) {
+                if (bindingResult.hasErrors()) {
                     modelAndView.setViewName("/duty/add");
+                    return modelAndView;
                 }
-
-                 */
-
                 duty.setStart(duty.getStart());
                 duty.setEnd(duty.getEnd());
                 duty.setSchedule(schedule.get());

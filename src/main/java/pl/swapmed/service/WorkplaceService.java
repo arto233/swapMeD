@@ -16,6 +16,8 @@ public interface WorkplaceService {
 
     void delete(Long id);
 
+    void updateWorkplace(String city, String name, String address, String division, Long id);
+
     List<Workplace> findByUsers_Id(Long userId);
 
     void deleteUserFromWorkplace(Long userId, Long workplaceId);

@@ -14,8 +14,9 @@
         <div class="container-fluid h-custom" style="margin-left: auto; margin-right: auto">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-9 col-lg-6 col-xl-5 container-fluid text-center">
-                    <div class="text-center">Czy na pewno opuścić grupę grupy?</div>
-                    <a th:href="@{/workplace}">
+                    <div class="text-center">Opuszczenie grupy spowoduje usunięcie wszystkich grafików.</div>
+                    <div class="text-center">Czy na pewno chcesz opuścić grupę?</div>
+                    <a th:href="@{/dashboard}">
                         <button type="button" class="btn btn-light btn-lg"
                                 style="background-color : #81dbe7; padding-left: 2.5rem; padding-right: 2.5rem;">Anuluj
                         </button>
@@ -24,9 +25,9 @@
                             style="background-color : #81dbe7; padding-left: 2.5rem; padding-right: 2.5rem;">Tak
                     </button>
                 </div>
+            </div>
+        </div>
     </form>
-</div>
-</div>
 </div>
 <footer th:insert="fragments/footer"></footer>
 </body>

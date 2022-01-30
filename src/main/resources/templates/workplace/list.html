@@ -7,7 +7,6 @@
 </head>
 <body>
 <header th:include="fragments/loggedHeader"></header>
-<section class="vh-100">
 
     <a th:href="@{/workplace/add}">Dodaj nową grupę</a>
 
@@ -33,44 +32,15 @@
             <td th:text="${workplace.city}"></td>
             <td th:text="${workplace.division}"></td>
             <td>
-
-                <span th:if="${workplaceUserList.isEmpty()}">
-                <a th:href="@{/workplace/{id}/add(id = ${workplace.id})}">
-                    <button type="button" class="btn btn-light btn-lg"
-                            style="background-color : #81dbe7; padding: 0.5rem;">Dołącz
-                    </button>
-                </a>
-                    </span>
-                <span th:unless="${workplaceUserList.isEmpty()}">
-                <span th:each="userWorkplace: ${workplaceUserList}">
-                <span th:unless="${workplace.id==userWorkplace.id}">
-                <a th:href="@{/workplace/{id}/add(id = ${workplace.id})}">
-                    <button type="button" class="btn btn-light btn-lg"
-                            style="background-color : #81dbe7; padding: 0.5rem;">Dołącz
-                    </button>
-                </a>
-                    </span>
-                    <span th:if="${workplace.id==userWorkplace.id}">
-                <a th:href="@{/workplace/{id}/delete-user(id = ${workplace.id})}">
-                    <button type="button" class="btn btn-light btn-lg"
-                            style="background-color : #81dbe7; padding: 0.5rem;">Opuść
-                    </button>
-                </a>
-                    </span>
-                    </span>
-                    </span>
-
-
-                <a th:href="@{/workplace/{id}(id = ${workplace.id})}">
+                <a th:href="@{/workplace/{id}/details(id = ${workplace.id})}">
                     <button type="button" class="btn btn-light btn-lg"
                             style="background-color : #81dbe7; padding: 0.5rem;">Szczegóły
                     </button>
-                </a></td>
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>
     <footer th:include="fragments/footer"></footer>
-</section>
-
 </body>
 </html>

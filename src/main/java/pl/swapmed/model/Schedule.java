@@ -2,6 +2,7 @@ package pl.swapmed.model;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.validator.constraints.Range;
 import pl.swapmed.validator.Month;
 
 import javax.persistence.*;
@@ -10,38 +11,33 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
+
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @NotEmpty
+    @Range(min = 1, max = 12)
     //@Month(message = "*miesiąc nie jest poprawny")
-    String month;
-    @NotEmpty
-    String year;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    Integer month;
+    @Range(min = 2022,max = 2030)
+    Integer year;
+    @ManyToOne//(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "workplace_id", nullable = false)
     Workplace workplace;
     @OneToMany(mappedBy = "schedule")
     Set<Duty> duties = new HashSet<>();
-    @ManyToMany
-    @JoinTable(name="schedule_user", joinColumns = @JoinColumn(name = "schedule_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    Set<User> users = new HashSet<>();
 
-    public void addUser(User user) {
-        this.users.add(user);
-        user.getSchedules().add(this);
-    }
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    User user;
 
-    public void removeUser (User user) {
-        this.users.remove(user);
-        user.getSchedules().remove(this);
-    }
+
+
+
 }

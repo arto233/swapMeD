@@ -10,11 +10,14 @@ public interface UserService {
 
     List<User> findAll();
 
+    List<User> findAllUsersInSchedule(Long workplaceId);
+
     User findUserByUsername(String name);
 
     User findUserByEmail(String email);
 
     Optional<User> findById(Long id);
+
 
     void saveUser(User user);
 

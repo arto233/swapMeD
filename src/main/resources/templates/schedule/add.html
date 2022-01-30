@@ -9,7 +9,7 @@
 <header th:include="fragments/loggedHeader"></header>
 <section class="vh-100">
 
-    <a th:href="@{/duty}">Wróć do listy grafików</a>
+    <a th:href="@{/workplace/{id}(id=${workplace.get().id})}">Wróć do listy grafików</a>
 
     <h1>
         <div th:text="${workplace.get().name}"></div>
@@ -39,18 +39,18 @@
         <label for="month">Miesiąc:</label>
         <select id="month" th:field="*{month}">
             <!--<option th:disabled>Wybierz miesiąc...</option>-->
-          <option th:value="January" th:text="Styczeń"></option>
-          <option th:value="February" th:text="Luty"></option>
-          <option th:value="March" th:text="Marzec"></option>
-          <option th:value="April" th:text="Kwiecień"></option>
-          <option th:value="May" th:text="Maj"></option>
-          <option th:value="June" th:text="Czerwiec"></option>
-          <option th:value="July" th:text="Lipiec"></option>
-          <option th:value="August" th:text="Sierpień"></option>
-          <option th:value="September" th:text="Wrzesień"></option>
-          <option th:value="October" th:text="Październik"></option>
-          <option th:value="November" th:text="Listopad"></option>
-          <option th:value="December" th:text="Grudzień"></option>
+          <option th:value="1" th:text="Styczeń"></option>
+          <option th:value="2" th:text="Luty"></option>
+          <option th:value="3" th:text="Marzec"></option>
+          <option th:value="4" th:text="Kwiecień"></option>
+          <option th:value="5" th:text="Maj"></option>
+          <option th:value="6" th:text="Czerwiec"></option>
+          <option th:value="7" th:text="Lipiec"></option>
+          <option th:value="8" th:text="Sierpień"></option>
+          <option th:value="9" th:text="Wrzesień"></option>
+          <option th:value="10" th:text="Październik"></option>
+          <option th:value="11" th:text="Listopad"></option>
+          <option th:value="12" th:text="Grudzień"></option>
         </select>
       </span>
 

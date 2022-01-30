@@ -14,44 +14,51 @@
                 <i class="fas fa-hospital fa-10x"></i>
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 ">
-                    <!-- City -->
-                    <div class="form-outline mb-4">
-                        <div>Miasto</div>
-                        <div  id="Example1" class="form-control form-control-lg bg-light  rounded-5"
-                               th:text="${workplace.city}" />
-                        <!--<label class="form-label" for="Example1">Miasto</label>-->
-                    </div>
+                <!-- City -->
+                <div class="form-outline mb-4">
+                    <div>Miasto</div>
+                    <div id="Example1" class="form-control form-control-lg bg-light  rounded-5"
+                         th:text="${workplace.city}"/>
+                    <!--<label class="form-label" for="Example1">Miasto</label>-->
+                </div>
 
-                    <!-- Name -->
+                <!-- Name -->
                 <div class="form-outline mb-4">
                     <div>Nazwa</div>
-                    <div  id="Example2" class="form-control form-control-lg bg-light  rounded-5"
-                          th:text="${workplace.name}" />
+                    <div id="Example2" class="form-control form-control-lg bg-light  rounded-5"
+                         th:text="${workplace.name}"/>
                     <label class="form-label" for="Example2"></label>
                 </div>
 
-                    <!-- Address -->
+                <!-- Address -->
                 <div class="form-outline mb-4">
                     <div>Adres</div>
-                    <div  id="Example3" class="form-control form-control-lg bg-light  rounded-5"
-                          th:text="${workplace.address}" />
+                    <div id="Example3" class="form-control form-control-lg bg-light  rounded-5"
+                         th:text="${workplace.address}"/>
                     <label class="form-label" for="Example3"></label>
                 </div>
 
-                    <!-- Division -->
+                <!-- Division -->
                 <div class="form-outline mb-4">
                     <div>Grupa</div>
-                    <div  id="Example4" class="form-control form-control-lg bg-light  rounded-5"
-                          th:text="${workplace.division}" />
+                    <div id="Example4" class="form-control form-control-lg bg-light  rounded-5"
+                         th:text="${workplace.division}"/>
                     <label class="form-label" for="Example4"></label>
                 </div>
 
-                    <a th:href="@{/workplace/{id}/edit(id = ${workplace.id})}">
-                        <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="button" class="btn btn-light btn-lg"
-                                style="background-color : #81dbe7; padding-left: 2.5rem; padding-right: 2.5rem;">Edytuj</button>
-                    </div>
-                    </a>
+                    <span th:if="${checkUser}">
+                        <a th:href="@{/workplace/{id}/delete-user(id = ${workplace.id})}">
+                            <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding: 0.5rem;">Opuść</button>
+                        </a>
+                    </span>
+                    <span th:unless="${checkUser}">
+                        <a th:href="@{/workplace/{id}/add(id = ${workplace.id})}">
+                            <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding: 0.5rem;">Dołącz
+                            </button>
+                        </a>
+                    </span>
             </div>
         </div>
     </div>

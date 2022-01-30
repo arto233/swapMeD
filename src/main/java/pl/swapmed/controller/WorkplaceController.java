@@ -1,6 +1,5 @@
 package pl.swapmed.controller;
 
-import org.springframework.boot.Banner;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import pl.swapmed.model.Schedule;
 import pl.swapmed.model.Workplace;
 import pl.swapmed.model.User;
 import pl.swapmed.service.*;
@@ -22,12 +22,14 @@ public class WorkplaceController {
 
     private final WorkplaceService workplaceService;
     private final UserService userService;
+    private final ScheduleService scheduleService;
 
 
     public WorkplaceController(WorkplaceService workplaceService,
-                               UserService userService) {
+                               UserService userService, ScheduleService scheduleService) {
         this.workplaceService = workplaceService;
         this.userService = userService;
+        this.scheduleService = scheduleService;
     }
 
     @GetMapping("")
@@ -35,9 +37,8 @@ public class WorkplaceController {
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.findUserByUsername(currentUser.getUsername());
         List<Workplace> workplaceList = workplaceService.findAll();
-        List<Workplace> workplaceUserList = workplaceService.findByUsers_Id(user.getId());
+        modelAndView.addObject("currentUser", currentUser);
         modelAndView.addObject("workplaceList", workplaceList);
-        modelAndView.addObject("workplaceUserList", workplaceUserList);
         modelAndView.setViewName("/workplace/list");
         return modelAndView;
     }
@@ -71,12 +72,29 @@ public class WorkplaceController {
 
     }
 
-    @GetMapping("/{id}/edit")
-    public ModelAndView editWorkplace(@PathVariable Long id) {
+    @GetMapping("/{workplaceId}")
+        public ModelAndView workplaceSchedulesList(@PathVariable Long workplaceId,
+                                                   @AuthenticationPrincipal CurrentUser currentUser) {
+            ModelAndView modelAndView = new ModelAndView();
+            Optional<Workplace> workplace = workplaceService.findById(workplaceId);
+            if (workplace.isPresent()) {
+                User user = userService.findUserByUsername(currentUser.getUsername());
+                List<Schedule> scheduleList = scheduleService.findByWorkplace_IdAndUser(workplace.get().getId(), user);
+                modelAndView.addObject("workplace", workplace);
+                modelAndView.addObject("scheduleList", scheduleList);
+                modelAndView.setViewName("/schedule/list");
+                return modelAndView;
+            }
+            modelAndView.setViewName("redirect:/error");
+            return modelAndView;
+        }
+
+    @GetMapping("/{workplaceId}/edit")
+    public ModelAndView editWorkplace(@PathVariable Long workplaceId) {
         ModelAndView modelAndView = new ModelAndView();
 
-        Optional<Workplace> workplace = workplaceService.findById(id);
-        if(workplace.isPresent()) {
+        Optional<Workplace> workplace = workplaceService.findById(workplaceId);
+        if (workplace.isPresent()) {
             modelAndView.addObject("workplace", workplace.get());
             modelAndView.setViewName("/workplace/edit");
             return modelAndView;
@@ -86,15 +104,18 @@ public class WorkplaceController {
         return modelAndView;
     }
 
-    @PostMapping("/{id}/edit")
+    @PostMapping("/{workplaceId}/edit")
     public ModelAndView editWorkplaceForm(@Valid Workplace workplace,
-                                     BindingResult bindingResult) {
+                                          BindingResult bindingResult,
+                                          @PathVariable Long workplaceId) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("/workplace/edit");
             return modelAndView;
         }
-        workplaceService.save(workplace);
+
+        workplaceService.updateWorkplace(workplace.getCity(), workplace.getName(),
+                workplace.getAddress(), workplace.getDivision(), workplaceId);
         modelAndView.setViewName("redirect:/workplace");
 
         return modelAndView;
@@ -130,11 +151,15 @@ public class WorkplaceController {
         return "redirect:/dashboard";
     }
 
-    @GetMapping("/{id}")
-    public ModelAndView showDetails(@PathVariable Long id) {
+    @GetMapping("/{id}/details")
+    public ModelAndView showDetails(@PathVariable Long id,
+                                    @AuthenticationPrincipal CurrentUser currentUser) {
         ModelAndView modelAndView = new ModelAndView();
+        User user = userService.findUserByUsername(currentUser.getUsername());
         Optional<Workplace> workplace = workplaceService.findById(id);
         if (workplace.isPresent()) {
+            Boolean checkUser = workplace.get().getUsers().contains(user);
+            modelAndView.addObject("checkUser", checkUser);
             modelAndView.addObject("workplace", workplace.get());
             modelAndView.setViewName("/workplace/details");
             return modelAndView;
@@ -164,7 +189,7 @@ public class WorkplaceController {
         Optional<Workplace> workplace = workplaceService.findById(id);
         if (workplace.isPresent()) {
             User user = userService.findUserByUsername(currentUser.getUser().getUsername());
-            workplaceService.deleteUserFromWorkplace(user.getId(),workplace.get().getId());
+            workplaceService.deleteUserFromWorkplace(user.getId(), workplace.get().getId());
             modelAndView.setViewName("redirect:/dashboard");
             return modelAndView;
         }

@@ -2,6 +2,7 @@ package pl.swapmed.service;
 
 import org.springframework.stereotype.Service;
 import pl.swapmed.model.Schedule;
+import pl.swapmed.model.User;
 import pl.swapmed.repository.ScheduleRepository;
 
 import java.util.List;
@@ -39,6 +40,16 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<Schedule> findByWorkplaceId(Long workplaceId) {
         return scheduleRepository.findByWorkplaceId(workplaceId);
+    }
+
+    @Override
+    public List<Schedule> findByWorkplace_IdAndMonthAndYear(Long workplaceId, Integer month, Integer year) {
+        return scheduleRepository.findByWorkplace_IdAndMonthAndYear(workplaceId, month, year);
+    }
+
+    @Override
+    public List<Schedule> findByWorkplace_IdAndUser(Long workplaceId, User user) {
+        return scheduleRepository.findByWorkplace_IdAndUser(workplaceId, user);
     }
 
     @Override

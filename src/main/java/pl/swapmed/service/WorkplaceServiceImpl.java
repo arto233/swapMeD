@@ -39,6 +39,11 @@ public class WorkplaceServiceImpl implements WorkplaceService {
     }
 
     @Override
+    public void updateWorkplace(String city, String name, String address, String division, Long id) {
+        workplaceRepository.updateWorkplace(city, name, address, division, id);
+    }
+
+    @Override
     public List<Workplace> findByUsers_Id(Long userId) {
         return workplaceRepository.findByUsers_Id(userId);
     }

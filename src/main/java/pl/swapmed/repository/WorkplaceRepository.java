@@ -18,6 +18,10 @@ public interface WorkplaceRepository extends JpaRepository<Workplace, Long> {
 
     List<Workplace> findByUsers_Id(Long userId);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE workplace SET city = ?1, name=?2, address=?3, division=?4 WHERE id=?5", nativeQuery = true)
+    void updateWorkplace(String city, String name, String address, String division, Long id);
 
     @Modifying
     @Transactional

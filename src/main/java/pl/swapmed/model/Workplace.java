@@ -27,15 +27,18 @@ public class Workplace {
     String address;
     @NotEmpty(message = "*Wprowadź nazwę oddziału")
     String division;
-    @ManyToMany//(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "workplace_user",
             joinColumns = @JoinColumn(name = "workplace_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     Set<User> users = new HashSet<>();
+    /*
     @OneToMany(mappedBy = "workplace")
     Set<Schedule> schedules = new HashSet<>();
+
+     */
 
     public void addUser(User user) {
         this.users.add(user);

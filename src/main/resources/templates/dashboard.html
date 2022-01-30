@@ -5,29 +5,48 @@
     <title>Dashboard</title>
 </head>
 <body>
-<header th:insert="fragments/loggedHeader"> </header>
-<h2>
+<header th:insert="fragments/loggedHeader"></header>
+<h2 class="d-flex justify-content-center">
     <a th:text="${user.name}"></a>
-    <a>, to jest lista grup, do których należysz:</a>
+    <a>, to jest lista Twoich miejsc pracy</a>
 
 </h2>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nazwa placówki</th>
-        <th scope="col">Oddział</th>
-        <th scope="col">Akcje</th>
-    </tr>
-    </thead>
+<table class="table d-flex justify-content-center">
+
+
     <tbody>
+    <tr >
+        <th class="justify-content-center text-center">#</th>
+        <th class="justify-content-center text-center">Nazwa placówki</th>
+        <th class="justify-content-center text-center">Oddział</th>
+        <th class="justify-content-center text-center">Akcje</th>
+    </tr>
     <tr th:each="workplace: ${workplaceUserList}">
         <th th:text="${workplaceUserList.indexOf(workplace)+1}" scope="row"></th>
         <td th:text="${workplace.name}"></td>
         <td th:text="${workplace.division}"></td>
-        <td><a th:href="@{/workplace/{id}/delete-user(id = ${workplace.id})}">Opuść grupę</a>
-            <a th:href="@{/workplace/{id}(id = ${workplace.id})}">Szczegóły</a>
-            <a th:href="@{/workplace/{id}/schedule(id = ${workplace.id})}">Grafik</a></td>
+        <td>
+            <a th:href="@{/workplace/{id}(id = ${workplace.id})}">
+                <button type="button" class="btn btn-light btn-lg"
+                        style="background-color : #81dbe7; padding:0.5rem;">Grafiki
+                </button>
+            </a>
+            <a th:href="@{/workplace/{id}/details(id = ${workplace.id})}">
+                    <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding:0.5rem;">Szczegóły
+                    </button>
+           </a>
+            <a th:href="@{/workplace/{id}/edit(id = ${workplace.id})}">
+                    <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding:0.5rem;">Edytuj
+                    </button>
+            </a>
+            <a th:href="@{/workplace/{id}/delete-user(id = ${workplace.id})}">
+                <button type="button" class="btn btn-light btn-lg"
+                        style="background-color : #81dbe7; padding:0.5rem;">Opuść grupę
+                </button>
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>
