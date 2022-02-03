@@ -8,7 +8,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>Logged User Header</title>
+    <title>SwapMeD</title>
     <!-- MDB icon -->
     <link rel="icon" th:href="@{/img/IconLogo.png}" type="image/x-icon"/>
     <!-- Font Awesome -->
@@ -40,19 +40,43 @@
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" style="color: black" th:href="@{/dashboard}">Panel użytkownika</a>
+                        <a class="nav-link" style="color: black" th:href="@{/dashboard}">Panel główny</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color: black" th:href="@{/workplace}">Grupy</a>
+                        <a class="nav-link" style="color: black" th:href="@{/workplace}">Znajdź grupę</a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link" style="color: black" th:href="@{/schedule}">Moje grafiki</a>
-                    </li>
+                    </li>-->
                 </ul>
                 <!-- Left links -->
 
             <!-- Right elements -->
-            <div class="d-flex align-items-center">
+
+                <!-- Notification dropdown -->
+                <div class="dropdown">
+                    <a
+                            class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow "
+                            href="#"
+                            id="navbarDropdownMenuLink"
+                            role="button"
+                            data-mdb-toggle="dropdown"
+                            aria-expanded="false"
+                    >
+                        <i class="fas fa-bell " style="font-size: 1.5em; color:black"></i>
+                        <span class="badge rounded-pill badge-notification bg-danger"
+                        >1</span
+                        >
+                    </a>
+                    <ul
+                            class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="navbarDropdownMenuLink"
+                    >
+                        <li><a class="dropdown-item" href="#">Skrzynka odbiorcza</a></li>
+                        <li><a class="dropdown-item" href="#">Skrzynka nadawcza</a></li>
+                    </ul>
+                </div>
+
                 <!-- Avatar -->
                 <div class="dropdown">
                     <a
@@ -71,10 +95,7 @@
                             aria-labelledby="navbarDropdownMenuAvatar"
                     >
                         <li>
-                            <a class="dropdown-item" href="#">Mój profil</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Ustawienia</a>
+                            <a class="dropdown-item" href="#">Szczegóły profilu</a>
                         </li>
                         <li>
                             <a class="dropdown-item" th:href="@{/confirm-logout}">Wyloguj</a>
@@ -83,7 +104,6 @@
                 </div>
             </div>
             <!-- Right elements -->
-        </div>
         <!-- Container wrapper -->
     </nav>
     <!-- Navbar -->

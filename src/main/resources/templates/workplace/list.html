@@ -3,44 +3,54 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Groups</title>
+    <title>SwapMeD</title>
 </head>
 <body>
 <header th:include="fragments/loggedHeader"></header>
+<div class="d-flex justify-content-start">
+    <ul class="justify-content-center text-center">
+        <ul class="mx-auto">
+            Nie ma Twojej grupy?
+        </ul>
+        <ul class="mx-auto">
 
-    <a th:href="@{/workplace/add}">Dodaj nową grupę</a>
-
-    <h1>
-        <div>Lista wszystkich grup zarejestrowanych w aplikacji</div>
-    </h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nazwa placówki</th>
-            <th scope="col">Adres</th>
-            <th scope="col">Miasto</th>
-            <th scope="col">Oddział</th>
-            <th scope="col">Akcje</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="workplace: ${workplaceList}">
-            <th th:text="${workplace.id}" scope="row"></th>
-            <td th:text="${workplace.name}"></td>
-            <td th:text="${workplace.address}"></td>
-            <td th:text="${workplace.city}"></td>
-            <td th:text="${workplace.division}"></td>
-            <td>
-                <a th:href="@{/workplace/{id}/details(id = ${workplace.id})}">
-                    <button type="button" class="btn btn-light btn-lg"
-                            style="background-color : #81dbe7; padding: 0.5rem;">Szczegóły
-                    </button>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <footer th:include="fragments/footer"></footer>
+            <a th:href="@{/workplace/add}">
+                <button type="button" class="btn btn-light btn-lg"
+                        style="background-color : #81dbe7; padding:0.5rem;">Utwórz grupę
+                </button>
+            </a>
+        </ul>
+    </ul>
+</div>
+<h2 class="d-flex justify-content-center">
+    <div>Lista wszystkich grup zarejestrowanych w aplikacji</div>
+</h2>
+<table class="table d-flex justify-content-center">
+    <tbody>
+    <tr>
+        <th class="justify-content-center text-center">#</th>
+        <th class="justify-content-center text-center">Nazwa placówki</th>
+        <th class="justify-content-center text-center">Adres</th>
+        <th class="justify-content-center text-center">Miasto</th>
+        <th class="justify-content-center text-center">Oddział</th>
+        <th class="justify-content-center text-center">Akcje</th>
+    </tr>
+    <tr th:each="workplace: ${workplaceList}">
+        <th th:text="${workplace.id}" scope="row"></th>
+        <td th:text="${workplace.name}"></td>
+        <td th:text="${workplace.address}"></td>
+        <td th:text="${workplace.city}"></td>
+        <td th:text="${workplace.division}"></td>
+        <td>
+            <a th:href="@{/workplace/{id}/details(id = ${workplace.id})}">
+                <button type="button" class="btn btn-light btn-lg"
+                        style="background-color : #81dbe7; padding: 0.5rem;">Szczegóły
+                </button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<footer th:include="fragments/footer"></footer>
 </body>
 </html>

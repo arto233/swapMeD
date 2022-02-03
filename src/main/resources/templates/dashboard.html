@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>SwapMeD</title>
 </head>
 <body>
 <header th:insert="fragments/loggedHeader"></header>
-<div class="text-end">
+<!--<div class="text-end">
     <a th:href="@{/workplace}">Znajdź swoją grupę</a>
-</div>
+</div>-->
 <h2 class="d-flex justify-content-center">
     <a th:text="${user.name}"></a>
     <a>, to jest lista Twoich miejsc pracy</a>
@@ -22,7 +22,7 @@
         <th class="justify-content-center text-center">#</th>
         <th class="justify-content-center text-center">Nazwa placówki</th>
         <th class="justify-content-center text-center">Oddział</th>
-        <th class="justify-content-center text-center">Akcje</th>""
+        <th class="justify-content-center text-center">Akcje</th>
     </tr>
     <tr th:each="workplace: ${workplaceUserList}">
         <th th:if="${workplaceUserList.isEmpty()}" colspan="4"><a th:href="@{/workplace}">Znajdź swoją grupę</a></th>

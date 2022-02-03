@@ -17,34 +17,34 @@
                 <form autocomplete="off" th:method="post" th:action="@{/workplace/{id}/edit(id=${workplace.id})}" th:object="${workplace}">
 
                     <!-- City input -->
-                    <div class="form-outline mb-4">
+                    <div class="form mb-4">
+                        <label class="form-label" for="form3Example1">Miasto</label>
                         <input type="text" id="form3Example1" class="form-control form-control-lg bg-light  rounded-5"
                                placeholder="Wprowadź miasto" th:field="*{city}" th:value="${workplace.city}" />
-                        <label class="form-label" for="form3Example1">Miasto</label>
                         <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}"/>
                     </div>
 
                     <!-- Name input -->
-                    <div class="form-outline mb-4">
+                    <div class="form mb-4">
+                        <label class="form-label" for="form3Example2">Nazwa placówki</label>
                         <input type="text" id="form3Example2" class="form-control form-control-lg bg-light  rounded-5"
                                placeholder="Wprowadź nazwę placówki" th:field="*{name}" th:value="${workplace.name}"/>
-                        <label class="form-label" for="form3Example2">Nazwa placówki</label>
                         <span th:if="${#fields.hasErrors('name')}" th:erroclass="ui-state-error-text" th:errors="*{name}"/>
                     </div>
 
                     <!-- Address input -->
-                    <div class="form-outline mb-4">
+                    <div class="form mb-4">
+                        <label class="form-label" for="form3Example3">Adres</label>
                         <input type="text" id="form3Example3" class="form-control form-control-lg bg-light  rounded-5"
                                placeholder="Wprowadź adres" th:field="*{address}" th:value="${workplace.address}"/>
-                        <label class="form-label" for="form3Example3">Adres</label>
                         <span th:if="${#fields.hasErrors('address')}" th:erroclass="ui-state-error-text" th:errors="*{address}"/>
                     </div>
 
                     <!-- Division input -->
-                    <div class="form-outline mb-4">
+                    <div class="form mb-4">
+                        <label class="form-label" for="form3Example4">Oddział</label>
                         <input type="text" id="form3Example4" class="form-control form-control-lg bg-light  rounded-5"
                                placeholder="Wprowadź nazwę oddziału" th:field="*{division}" th:value="${workplace.division}"/>
-                        <label class="form-label" for="form3Example4">Oddział</label>
                         <span th:if="${#fields.hasErrors('division')}" th:erroclass="ui-state-error-text" th:errors="*{division}"/>
                     </div>
 

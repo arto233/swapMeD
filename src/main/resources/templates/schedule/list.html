@@ -7,35 +7,60 @@
 </head>
 <body>
 <header th:include="fragments/loggedHeader"></header>
+<div class="d-flex justify-content-start">
+    <ul class="justify-content-center text-center">
+        <!--<ul class="mx-auto">
+            Nie ma grafiku?
+        </ul>-->
+        <ul class="mx-auto">
 
+            <a th:href="@{/workplace/{id}/schedule/add(id = ${workplace.get().id})}">
+                <button type="button" class="btn btn-light btn-lg"
+                        style="background-color : #81dbe7; padding:0.5rem;">Dodaj nowy grafik
+                </button>
+            </a>
+        </ul>
+    </ul>
+</div>
 
-    <a th:href="@{/workplace/{id}/schedule/add(id = ${workplace.get().id})}">Dodaj nowy grafik</a>
+<h1 class="d-flex justify-content-center">
+    <div>Lista moich grafików</div>
+</h1>
+<h2 class="d-flex justify-content-center">
+    <div th:text="${workplace.get().name}"></div>
+</h2>
+<h2 class="d-flex justify-content-center">
+    <div th:text="${workplace.get().division}"></div>
+</h2>
 
-    <h1>
-        <div>Lista moich grafików</div>
-    </h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nazwa placówki</th>
-            <th scope="col">Oddział</th>
-            <th scope="col">Miesiąc</th>
-            <th scope="col">Akcje</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="schedule: ${scheduleList}">
-            <th th:text="${schedule.id}" scope="row"></th>
-            <td th:text="${schedule.workplace.name}"></td>
-            <td th:text="${schedule.workplace.division}"></td>
-            <td th:text="${schedule.month + '/' + schedule.year}"></td>
-            <td><a th:href="@{/workplace/{id}/schedule/{scheduleId}(id = ${workplace.get().id}, scheduleId = ${schedule.id})}">Szczegóły</a>
-            <a th:href="@{/workplace/{id}/schedule/{scheduleId}/duty/add(id = ${workplace.get().id}, scheduleId = ${schedule.id})}">Dodaj swoje dyżury</a></td>
-        </tr>
-        </tbody>
-    </table>
-    <footer th:include="fragments/footer"></footer>
+<table class="table d-flex justify-content-center">
+    <thead>
+
+    </thead>
+    <tbody>
+    <tr>
+        <th class="justify-content-center text-center">#</th>
+        <th class="justify-content-center text-center">Miesiąc</th>
+        <th class="justify-content-center text-center">Akcje</th>
+    </tr>
+    <tr th:each="schedule: ${scheduleList}">
+        <th th:text="${scheduleList.indexOf(schedule)+1}" scope="row"></th>
+        <td th:text="${schedule.month + ' / ' + schedule.year}"></td>
+        <td>
+            <a th:href="@{/workplace/{id}/schedule/{scheduleId}(id = ${workplace.get().id}, scheduleId = ${schedule.id})}">
+                <button type="button" class="btn btn-light btn-lg"
+                        style="background-color : #81dbe7; padding: 0.5rem;">Szczegóły
+                </button>
+            </a>
+            <a th:href="@{/workplace/{id}/schedule/{scheduleId}/duty/add(id = ${workplace.get().id}, scheduleId = ${schedule.id})}">
+                <button type="button" class="btn btn-light btn-lg"
+                        style="background-color : #81dbe7; padding: 0.5rem;">Dodaj swoje dyżury
+                </button>
+            </a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:include="fragments/footer"></footer>
 
 </body>
 </html>
