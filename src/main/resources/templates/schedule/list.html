@@ -20,7 +20,6 @@
             <th scope="col">#</th>
             <th scope="col">Nazwa placówki</th>
             <th scope="col">Oddział</th>
-            <th scope="col">Rok</th>
             <th scope="col">Miesiąc</th>
             <th scope="col">Akcje</th>
         </tr>
@@ -30,8 +29,7 @@
             <th th:text="${schedule.id}" scope="row"></th>
             <td th:text="${schedule.workplace.name}"></td>
             <td th:text="${schedule.workplace.division}"></td>
-            <td th:text="${schedule.year}"></td>
-            <td th:text="${schedule.month}"></td>
+            <td th:text="${schedule.month + '/' + schedule.year}"></td>
             <td><a th:href="@{/workplace/{id}/schedule/{scheduleId}(id = ${workplace.get().id}, scheduleId = ${schedule.id})}">Szczegóły</a>
             <a th:href="@{/workplace/{id}/schedule/{scheduleId}/duty/add(id = ${workplace.get().id}, scheduleId = ${schedule.id})}">Dodaj swoje dyżury</a></td>
         </tr>

@@ -7,31 +7,78 @@
 </head>
 <body>
 <header th:include="fragments/loggedHeader"></header>
-
-<a th:href="@{/workplace/{workplaceId}/schedule/duty(workplaceId=${workplace.id})}">Wróć do listy grafików</a>
-
+<div class="text-end">
+    <a th:href="@{/workplace/{workplaceId}(workplaceId=${workplace.id})}">Wróć do listy grafików</a>
+</div>
 <h1>
-    <div>Formularz dodawania grafiku</div>
+    <div class="d-flex justify-content-center">Dodaj dyżur do swojego grafiku</div>
 </h1>
 
-<form th:object="${duty}"
-      th:action="@{/workplace/{id}/schedule/{scheduleId}/duty/add(id=${id}, scheduleId=${scheduleId})}"
-      th:method="post">
-    <label for="start-time">Data i godzina rozpoczęcia dyżuru:</label>
+<div class="form d-flex justify-content-center">
+    <form
+            th:object="${duty}"
+            th:action="@{/workplace/{workplaceId}/schedule/{scheduleId}/duty/add(workplaceId=${workplace.id}, scheduleId=${schedule.id})}"
+            th:method="post">
+        <div class="form d-flex justify-content-center">
+            <label for="start-time">Data i godzina rozpoczęcia dyżuru: </label>
 
-    <input type="datetime-local" id="start-time"
-           th:field="*{{start}}" name="start"
-           min="2022-01-01T00:00" max="2030-12-31T23:59">
-    <span th:if="${#fields.hasErrors('start')}" th:errors="*{start}"/>
+            <input
+                    type="datetime-local" id="start-time"
+                    th:field="*{{start}}" name="start"
+                    min="2022-01-01T00:00" max="2030-12-31T23:59"
+            value="2022-01-01T07:00">
+            <span th:if="${#fields.hasErrors('start')}" th:errors="*{start}"/>
+            <label for="end-time">  Data i godzina końca dyżuru: </label>
+            <input type="datetime-local" id="end-time"
+                   th:field="*{{end}}" name="end"
+                   min="2022-01-01T00:00" max="2030-12-31T23:59">
+            <span th:if="${#fields.hasErrors('end')}" th:errors="*{end}"/>
+        </div>
+        <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-white"></div>
 
-    <label for="end-time">Data i godzina końca dyżuru</label>
-    <input type="datetime-local" id="end-time"
-           th:field="*{{end}}" name="end"
-           min="2022-01-01T00:00" max="2030-12-31T23:59">
-    <span th:if="${#fields.hasErrors('end')}" th:errors="*{end}"/>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-light btn-lg"
+                    style="background-color : #81dbe7; padding:0.5rem;">Dodaj dyżur
+            </button>
+        </div>
+    </form>
+</div>
+</div>
 
-    <button type="submit">Dodaj dyżur</button>
-</form>
+<div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-white"></div>
+
+<h2 class="d-flex justify-content-center">
+    <div th:text="${workplace.division + ': szczegóły grafiku'}"></div>
+</h2>
+<div class="table-responsive">
+    <table class="table table-bordered table-sm d-flex justify-content-center ">
+        <tbody>
+        <tr>
+            <th th:text="${schedule.month + '/' + schedule.year}" class="justify-content-center text-center"
+                colspan="4"></th>
+        </tr>
+        <tr>
+            <th class="justify-content-center text-center" scope="col">#</th>
+            <th class="justify-content-center text-center" scope="col">Początek dyżuru</th>
+            <th class="justify-content-center text-center" scope="col">Koniec dyżuru</th>
+            <th class="justify-content-center text-center" scope="col">Akcje</th>
+
+        </tr>
+
+        <tr th:each="duty: ${duties}">
+            <th class="justify-content-center text-center" scope="row" th:text="${duties.indexOf(duty)+1}"></th>
+            <td class="justify-content-center text-center" th:text="${duty.start}"></td>
+            <td class="justify-content-center text-center" th:text="${duty.end}"></td>
+            <td class="justify-content-center text-center">
+                <a th:href="@{/workplace/{workplaceId}/schedule/{scheduleId}/duty/{dutyId}/delete(workplaceId=${workplace.id},scheduleId=${schedule.id},dutyId=${duty.id})}">Usuń
+                    dyżur</a>
+                Zamień dyżur
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
 
 <footer th:include="fragments/footer"></footer>
 

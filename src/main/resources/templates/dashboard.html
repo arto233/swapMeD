@@ -6,6 +6,9 @@
 </head>
 <body>
 <header th:insert="fragments/loggedHeader"></header>
+<div class="text-end">
+    <a th:href="@{/workplace}">Znajdź swoją grupę</a>
+</div>
 <h2 class="d-flex justify-content-center">
     <a th:text="${user.name}"></a>
     <a>, to jest lista Twoich miejsc pracy</a>
@@ -19,9 +22,10 @@
         <th class="justify-content-center text-center">#</th>
         <th class="justify-content-center text-center">Nazwa placówki</th>
         <th class="justify-content-center text-center">Oddział</th>
-        <th class="justify-content-center text-center">Akcje</th>
+        <th class="justify-content-center text-center">Akcje</th>""
     </tr>
     <tr th:each="workplace: ${workplaceUserList}">
+        <th th:if="${workplaceUserList.isEmpty()}" colspan="4"><a th:href="@{/workplace}">Znajdź swoją grupę</a></th>
         <th th:text="${workplaceUserList.indexOf(workplace)+1}" scope="row"></th>
         <td th:text="${workplace.name}"></td>
         <td th:text="${workplace.division}"></td>

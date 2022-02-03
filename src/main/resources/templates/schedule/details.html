@@ -13,30 +13,31 @@
 <a th:href="@{/workplace/{workplaceId}/schedule/{scheduleId}/duty/add(workplaceId=${workplace.id}, scheduleId=${schedule.id})}">Dodaj dyżur do grafiku</a>
 
 
-<h2>
-    <div><span th:text="${workplace.division}"></span> </div>
-    <div>Szczegóły grafiku</div>
+<h2 class="d-flex justify-content-center">
+    <div th:text="${workplace.division + ': szczegóły grafiku'}"></div>
 </h2>
 <div class="table-responsive">
-    <table class="table table-bordered table-sm ">
-        <thead>
+    <table class="table table-bordered table-sm d-flex justify-content-center ">
+        <tbody>
         <tr>
-            <h3><th colspan="4"> <span th:text="${schedule.month}"></span>/<span th:text="${schedule.year}"></span> </th></h3>
+            <th th:text="${schedule.month + '/' + schedule.year}" class="justify-content-center text-center" colspan="4"></th>
         </tr>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Początek dyżuru</th>
-            <th scope="col">Koniec dyżuru</th>
-            <th scope="col">Akcje</th>
+            <th class="justify-content-center text-center" scope="col">#</th>
+            <th class="justify-content-center text-center" scope="col">Początek dyżuru</th>
+            <th class="justify-content-center text-center" scope="col">Koniec dyżuru</th>
+            <th class="justify-content-center text-center" scope="col">Akcje</th>
 
         </tr>
-        </thead>
-        <tbody>
+
         <tr th:each="duty: ${duties}">
-            <th scope="row" th:text="${duties.indexOf(duty)+1}"></th>
-            <td th:text="${duty.start}"></td>
-            <td th:text="${duty.end}"></td>
-            <td>Usuń dyżur Zamień dyżur</td>
+            <th class="justify-content-center text-center" scope="row" th:text="${duties.indexOf(duty)+1}"></th>
+            <td class="justify-content-center text-center" th:text="${duty.start}"></td>
+            <td class="justify-content-center text-center" th:text="${duty.end}"></td>
+            <td class="justify-content-center text-center">
+                <a th:href="@{/workplace/{workplaceId}/schedule/{scheduleId}/duty/{dutyId}/delete(workplaceId=${workplace.id},scheduleId=${schedule.id},dutyId=${duty.id})}">Usuń dyżur</a>
+                Zamień dyżur
+            </td>
         </tr>
         </tbody>
 

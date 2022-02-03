@@ -20,10 +20,10 @@ public class Duty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(unique = true)
+    //@Column(unique = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     LocalDateTime start;
-    @Column(unique = true)
+    //@Column(unique = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     LocalDateTime end;
     @ManyToOne
