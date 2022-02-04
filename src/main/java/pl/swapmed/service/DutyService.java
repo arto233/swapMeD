@@ -16,4 +16,6 @@ public interface DutyService {
     Optional<Duty> findById(Long id);
 
     void delete(Long id);
+
+    void deleteDutiesByUserId(Long userId);
 }

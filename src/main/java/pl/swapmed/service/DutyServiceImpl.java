@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DutyServiceImpl implements DutyService{
+public class DutyServiceImpl implements DutyService {
 
     private final DutyRepository dutyRepository;
 
@@ -28,7 +28,7 @@ public class DutyServiceImpl implements DutyService{
 
     @Override
     public void save(Duty duty) {
-dutyRepository.save(duty);
+        dutyRepository.save(duty);
     }
 
     @Override
@@ -38,6 +38,11 @@ dutyRepository.save(duty);
 
     @Override
     public void delete(Long id) {
-dutyRepository.deleteById(id);
+        dutyRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteDutiesByUserId(Long userId) {
+        dutyRepository.deleteDutiesByUserId(userId);
     }
 }

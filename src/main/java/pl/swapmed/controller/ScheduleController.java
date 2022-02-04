@@ -129,6 +129,43 @@ public class ScheduleController {
         return modelAndView;
     }
 
+    @GetMapping("/{scheduleId}/delete-schedule")
+    public ModelAndView deleteScheduleFromUser(@PathVariable Long workplaceId,
+                                               @PathVariable Long scheduleId) {
+        ModelAndView modelAndView = new ModelAndView();
+        Optional<Workplace> workplace = workplaceService.findById(workplaceId);
+        if (workplace.isPresent()) {
+            Optional<Schedule> schedule = scheduleService.findById(scheduleId);
+            if(schedule.isPresent()) {
+                modelAndView.addObject("workplace", workplace.get());
+                modelAndView.addObject("schedule", schedule.get());
+                modelAndView.setViewName("/schedule/delete");
+                return modelAndView;
+            }
+        }
+        modelAndView.setViewName("redirect:/error");
+        return modelAndView;
+    }
+
+    @PostMapping("/{scheduleId}/delete-schedule")
+    public ModelAndView deleteScheduleFromUserConfirm(@AuthenticationPrincipal CurrentUser currentUser,
+                                                       @PathVariable Long workplaceId,
+                                                      @PathVariable Long scheduleId) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        Optional<Workplace> workplace = workplaceService.findById(workplaceId);
+        if (workplace.isPresent()) {
+            Optional<Schedule> schedule = scheduleService.findById(scheduleId);
+            if (schedule.isPresent()) {
+                scheduleService.delete(scheduleId);
+                modelAndView.setViewName("redirect:/workplace/"+workplaceId);
+                return modelAndView;
+            }
+        }
+        modelAndView.setViewName("redirect:/error");
+        return modelAndView;
+    }
+
     public int daysNumberInMonth(int month, int year) {
         LocalDate monthOfSchedule = LocalDate.of(year, month, 1);
         return monthOfSchedule.getDayOfMonth();

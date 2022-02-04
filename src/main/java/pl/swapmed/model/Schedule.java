@@ -27,13 +27,13 @@ public class Schedule {
     Integer month;
     @Range(min = 2022,max = 2030)
     Integer year;
-    @ManyToOne//(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "workplace_id", nullable = false)
     Workplace workplace;
     @OneToMany(mappedBy = "schedule")
     Set<Duty> duties = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     User user;
 

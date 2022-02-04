@@ -56,4 +56,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     public Optional<Schedule> findScheduleByWorkplaceId(Long workplaceId) {
         return scheduleRepository.findScheduleByWorkplace_Id(workplaceId);
     }
+
+    @Override
+    public void deleteUserFromSchedule(Long userId, Long workplaceId) {
+        scheduleRepository.deleteUserFromSchedule(userId, workplaceId);
+    }
 }

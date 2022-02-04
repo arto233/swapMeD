@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Groups</title>
+    <title>SwapMeD</title>
 </head>
 <body>
 <header th:include="fragments/loggedHeader"></header>
@@ -47,16 +47,22 @@
         <th th:text="${scheduleList.indexOf(schedule)+1}" scope="row"></th>
         <td th:text="${schedule.month + ' / ' + schedule.year}"></td>
         <td>
+            <a th:href="@{/workplace/{id}/schedule/{scheduleId}/duty/add(id = ${workplace.get().id}, scheduleId = ${schedule.id})}">
+                <button type="button" class="btn btn-light btn-lg"
+                        style="background-color : #81dbe7; padding: 0.5rem;">Dodaj swoje dyżury
+                </button>
+            </a>
             <a th:href="@{/workplace/{id}/schedule/{scheduleId}(id = ${workplace.get().id}, scheduleId = ${schedule.id})}">
                 <button type="button" class="btn btn-light btn-lg"
                         style="background-color : #81dbe7; padding: 0.5rem;">Szczegóły
                 </button>
             </a>
-            <a th:href="@{/workplace/{id}/schedule/{scheduleId}/duty/add(id = ${workplace.get().id}, scheduleId = ${schedule.id})}">
+            <a th:href="@{/workplace/{id}/schedule/{scheduleId}/delete-schedule(id = ${workplace.get().id}, scheduleId = ${schedule.id})}">
                 <button type="button" class="btn btn-light btn-lg"
-                        style="background-color : #81dbe7; padding: 0.5rem;">Dodaj swoje dyżury
+                        style="background-color : #81dbe7; padding: 0.5rem;">Usuń
                 </button>
-            </a></td>
+            </a>
+            </td>
     </tr>
     </tbody>
 </table>

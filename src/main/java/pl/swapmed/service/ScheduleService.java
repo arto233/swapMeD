@@ -24,5 +24,7 @@ public interface ScheduleService {
 
     Optional<Schedule> findScheduleByWorkplaceId(Long workplaceId);
 
+    void deleteUserFromSchedule(Long userId, Long workplaceId);
+
 
 }

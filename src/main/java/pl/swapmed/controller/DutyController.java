@@ -90,8 +90,10 @@ public class DutyController {
     @PostMapping("/add")
     public ModelAndView addDutyToSchedule(@Valid Duty duty, BindingResult bindingResult,
                                           @PathVariable Long workplaceId,
-                                          @PathVariable Long scheduleId) {
+                                          @PathVariable Long scheduleId,
+                                          @AuthenticationPrincipal CurrentUser currentUser) {
         ModelAndView modelAndView = new ModelAndView();
+        User user = userService.findUserByUsername(currentUser.getUsername());
         Optional<Workplace> workplace = workplaceService.findById(workplaceId);
         if (workplace.isPresent()) {
             Optional<Schedule> schedule = scheduleService.findById(scheduleId);
@@ -103,6 +105,7 @@ public class DutyController {
                 duty.setStart(duty.getStart());
                 duty.setEnd(duty.getEnd());
                 duty.setSchedule(schedule.get());
+                duty.setUser(user);
                 dutyService.save(duty);
                 modelAndView.setViewName("redirect:/workplace/" + workplaceId + "/schedule/" + scheduleId + "/duty/add");
                 return modelAndView;

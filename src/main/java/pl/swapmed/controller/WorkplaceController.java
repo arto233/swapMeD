@@ -23,13 +23,15 @@ public class WorkplaceController {
     private final WorkplaceService workplaceService;
     private final UserService userService;
     private final ScheduleService scheduleService;
+    private final DutyService dutyService;
 
 
     public WorkplaceController(WorkplaceService workplaceService,
-                               UserService userService, ScheduleService scheduleService) {
+                               UserService userService, ScheduleService scheduleService, DutyService dutyService) {
         this.workplaceService = workplaceService;
         this.userService = userService;
         this.scheduleService = scheduleService;
+        this.dutyService = dutyService;
     }
 
     @GetMapping("")
@@ -80,6 +82,8 @@ public class WorkplaceController {
             if (workplace.isPresent()) {
                 User user = userService.findUserByUsername(currentUser.getUsername());
                 List<Schedule> scheduleList = scheduleService.findByWorkplace_IdAndUser(workplace.get().getId(), user);
+                Collections.sort(scheduleList, (a, b) -> a.getMonth().compareTo(b.getMonth()));
+                Collections.sort(scheduleList, (a, b) -> a.getYear().compareTo(b.getYear()));
                 modelAndView.addObject("workplace", workplace);
                 modelAndView.addObject("scheduleList", scheduleList);
                 modelAndView.setViewName("/schedule/list");
@@ -121,11 +125,11 @@ public class WorkplaceController {
         return modelAndView;
     }
 
-    @GetMapping("/{id}/add")
-    public ModelAndView addUserToWorkplace(@PathVariable long id) {
+    @GetMapping("/{workplaceId}/add")
+    public ModelAndView addUserToWorkplace(@PathVariable long workplaceId) {
 
         ModelAndView modelAndView = new ModelAndView();
-        Optional<Workplace> workplace = workplaceService.findById(id);
+        Optional<Workplace> workplace = workplaceService.findById(workplaceId);
         if (workplace.isPresent()) {
             modelAndView.setViewName("/user/workplace/addConfirm");
             modelAndView.addObject("workplace", workplace.get());
@@ -135,11 +139,11 @@ public class WorkplaceController {
         return modelAndView;
     }
 
-    @PostMapping("/{id}/add")
+    @PostMapping("/{workplaceId}/add")
     public String addUserToWorkplaceConfirm(@AuthenticationPrincipal CurrentUser currentUser,
-                                            @PathVariable long id) {
+                                            @PathVariable long workplaceId) {
 
-        Optional<Workplace> workplace = workplaceService.findById(id);
+        Optional<Workplace> workplace = workplaceService.findById(workplaceId);
         if (workplace.isPresent()) {
             User user = userService.findUserByUsername(currentUser.getUser().getUsername());
             workplace.get().addUser(user);
@@ -151,12 +155,12 @@ public class WorkplaceController {
         return "redirect:/dashboard";
     }
 
-    @GetMapping("/{id}/details")
-    public ModelAndView showDetails(@PathVariable Long id,
+    @GetMapping("/{workplaceId}/details")
+    public ModelAndView showDetails(@PathVariable Long workplaceId,
                                     @AuthenticationPrincipal CurrentUser currentUser) {
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.findUserByUsername(currentUser.getUsername());
-        Optional<Workplace> workplace = workplaceService.findById(id);
+        Optional<Workplace> workplace = workplaceService.findById(workplaceId);
         if (workplace.isPresent()) {
             Boolean checkUser = workplace.get().getUsers().contains(user);
             modelAndView.addObject("checkUser", checkUser);
@@ -168,10 +172,10 @@ public class WorkplaceController {
         return modelAndView;
     }
 
-    @GetMapping("/{id}/delete-user")
-    public ModelAndView deleteUserFromWorkplace(@PathVariable Long id) {
+    @GetMapping("/{workplaceId}/delete-user")
+    public ModelAndView deleteUserFromWorkplace(@PathVariable Long workplaceId) {
         ModelAndView modelAndView = new ModelAndView();
-        Optional<Workplace> workplace = workplaceService.findById(id);
+        Optional<Workplace> workplace = workplaceService.findById(workplaceId);
         if (workplace.isPresent()) {
             modelAndView.addObject("workplace", workplace.get());
             modelAndView.setViewName("/user/workplace/deleteConfirm");
@@ -181,15 +185,17 @@ public class WorkplaceController {
         return modelAndView;
     }
 
-    @PostMapping("/{id}/delete-user")
+    @PostMapping("/{workplaceId}/delete-user")
     public ModelAndView deleteUserFromWorkplaceConfirm(@AuthenticationPrincipal CurrentUser currentUser,
-                                                       @PathVariable long id) {
+                                                       @PathVariable long workplaceId) {
 
         ModelAndView modelAndView = new ModelAndView();
-        Optional<Workplace> workplace = workplaceService.findById(id);
+        Optional<Workplace> workplace = workplaceService.findById(workplaceId);
         if (workplace.isPresent()) {
             User user = userService.findUserByUsername(currentUser.getUser().getUsername());
             workplaceService.deleteUserFromWorkplace(user.getId(), workplace.get().getId());
+            dutyService.deleteDutiesByUserId(user.getId());
+            scheduleService.deleteUserFromSchedule(user.getId(), workplaceId);
             modelAndView.setViewName("redirect:/dashboard");
             return modelAndView;
         }

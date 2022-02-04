@@ -34,11 +34,11 @@ public class Workplace {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     Set<User> users = new HashSet<>();
-    /*
+
     @OneToMany(mappedBy = "workplace")
     Set<Schedule> schedules = new HashSet<>();
 
-     */
+
 
     public void addUser(User user) {
         this.users.add(user);
