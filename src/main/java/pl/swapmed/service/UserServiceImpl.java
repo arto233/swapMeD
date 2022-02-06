@@ -2,12 +2,14 @@ package pl.swapmed.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.swapmed.model.Duty;
 import pl.swapmed.model.Role;
 import pl.swapmed.model.User;
 import pl.swapmed.model.Workplace;
 import pl.swapmed.repository.RoleRepository;
 import pl.swapmed.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +35,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllUsersInSchedule(Long workplaceId) {
         return userRepository.findAllUsersInSchedule(workplaceId);
+    }
+
+    @Override
+    public List<User> findAllUsersToShift(Long workplaceId, Integer month, Integer year) {
+        return userRepository.findAllUsersToShift(workplaceId, month, year);
     }
 
     @Override

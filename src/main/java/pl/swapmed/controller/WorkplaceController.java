@@ -120,7 +120,7 @@ public class WorkplaceController {
 
         workplaceService.updateWorkplace(workplace.getCity(), workplace.getName(),
                 workplace.getAddress(), workplace.getDivision(), workplaceId);
-        modelAndView.setViewName("redirect:/workplace");
+        modelAndView.setViewName("redirect:/dashboard");
 
         return modelAndView;
     }

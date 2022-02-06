@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>500</title>
+    <title>SwapMeD</title>
 </head>
 <body>
-<div>Error 500</div>
-<h1>Something went wrong! </h1>
-<h2>Our Engineers are on it</h2>
-<a href="/dashboard">Go Home</a>
+<header th:insert="fragments/loggedHeader"></header>
+<div sec:authorize="isAuthenticated()">
+
+    <div class="container-fluid h-custom" style="margin-left: auto; margin-right: auto">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5 container-fluid text-center">
+                <div class="text-center"><h1>Błąd 500</h1></div>
+                <a th:href="@{/dashboard}">
+                    <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding-left: 2.5rem; padding-right: 2.5rem;">Wróć do strony głównej
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="fragments/footer"></footer>
 </body>
 </html>

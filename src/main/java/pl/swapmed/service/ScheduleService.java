@@ -1,5 +1,6 @@
 package pl.swapmed.service;
 
+import pl.swapmed.model.Duty;
 import pl.swapmed.model.Schedule;
 import pl.swapmed.model.User;
 

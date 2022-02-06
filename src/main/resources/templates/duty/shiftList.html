@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SwapMeD</title>
+</head>
+<body>
+<header th:include="fragments/loggedHeader"></header>
+<div class="d-flex justify-content-start">
+    <ul class="justify-content-center text-center">
+        <td class="mx-auto">
+
+            <a th:href="@{/workplace/{id}(id=${workplace.id})}">
+                <button type="button" class="btn btn-light btn-lg"
+                        style="background-color : #81dbe7; padding:0.5rem;">Wróć do listy grafików
+                </button>
+            </a>
+        </td>
+    </ul>
+</div>
+
+<h2 class="d-flex justify-content-center">
+    <div th:text="${duty.start + ' - ' + duty.end}"></div>
+</h2>
+<h2 class="d-flex justify-content-center">
+    <div th:text="${'lista osób, które mogą zamienić się z Tobą'}"></div>
+</h2>
+<div class="table-responsive">
+    <table class="table table-sm d-flex justify-content-center ">
+        <tbody>
+        <tr>
+            <th th:text="${schedule.month + ' / ' + schedule.year}" class="justify-content-center text-center"
+                colspan="6"></th>
+        </tr>
+        <tr>
+            <th class="justify-content-center text-center" scope="col">#</th>
+            <th class="justify-content-center text-center" scope="col">Imię</th>
+            <th class="justify-content-center text-center" scope="col">Nazwisko</th>
+            <th class="justify-content-center text-center" scope="col">Akcje</th>
+
+        </tr>
+        <tr th:each="possibleShift: ${possibleShifts}">
+            <th class="justify-content-center text-center" scope="row" th:text="${possibleShifts.indexOf(possibleShift)+1}"></th>
+            <td class="justify-content-center text-center" th:text="${possibleShift.name}"></td>
+            <td class="justify-content-center text-center" th:text="${possibleShift.lastName}"></td>
+            <td class="justify-content-center text-center">
+                <a href="#">
+                    <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding:0.5rem;">Zaproponuj zamianę
+                    </button>
+                </a>
+            </td>
+        </tr>
+        </td>
+        </tbody>
+
+    </table>
+</div>
+<footer th:include="fragments/footer"></footer>
+
+</body>
+</html>

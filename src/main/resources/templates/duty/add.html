@@ -67,7 +67,7 @@
     <div th:text="${workplace.division + ': szczegóły grafiku'}"></div>
 </h2>
 <div class="table-responsive">
-    <table class="table table-bordered table-sm d-flex justify-content-center ">
+    <table class="table table-sm d-flex justify-content-center ">
         <tbody>
         <tr>
             <th th:text="${schedule.month + '/' + schedule.year}" class="justify-content-center text-center"
@@ -86,9 +86,16 @@
             <td class="justify-content-center text-center" th:text="${duty.start}"></td>
             <td class="justify-content-center text-center" th:text="${duty.end}"></td>
             <td class="justify-content-center text-center">
-                <a th:href="@{/workplace/{workplaceId}/schedule/{scheduleId}/duty/{dutyId}/delete(workplaceId=${workplace.id},scheduleId=${schedule.id},dutyId=${duty.id})}">Usuń
-                    dyżur</a>
-                Zamień dyżur
+                <a th:href="@{/workplace/{workplaceId}/schedule/{scheduleId}/duty/{dutyId}/delete(workplaceId=${workplace.id},scheduleId=${schedule.id},dutyId=${duty.id})}">
+                    <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding:0.5rem;">Usuń dyżur
+                    </button>
+                </a>
+                <a th:href="@{/workplace/{workplaceId}/schedule/{scheduleId}/duty/{dutyId}/findShift(workplaceId=${workplace.id},scheduleId=${schedule.id},dutyId=${duty.id})}">
+                    <button type="button" class="btn btn-light btn-lg"
+                            style="background-color : #81dbe7; padding:0.5rem;">Wyszukaj zamianę
+                    </button>
+                </a>
             </td>
         </tr>
         </tbody>

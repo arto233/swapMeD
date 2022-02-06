@@ -17,9 +17,7 @@ import pl.swapmed.service.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/workplace/{workplaceId}/schedule/{scheduleId}/duty")
@@ -29,6 +27,8 @@ public class DutyController {
     private final WorkplaceService workplaceService;
     private final ScheduleService scheduleService;
     private final UserService userService;
+    private static Boolean hasSameDuty = false;
+    private static Boolean hasBeforeOrAfterDuty = false;
 
 
     public DutyController(DutyService dutyService,
@@ -40,25 +40,6 @@ public class DutyController {
         this.userService = userService;
     }
 
-    @GetMapping("")
-    public ModelAndView myDuty(@PathVariable Long workplaceId,
-                               @PathVariable Long scheduleId) {
-        ModelAndView modelAndView = new ModelAndView();
-        Optional<Workplace> workplace = workplaceService.findById(workplaceId);
-        if (workplace.isPresent()) {
-            Optional<Schedule> schedule = scheduleService.findById(scheduleId);
-            if (schedule.isPresent()) {
-                List<Duty> dutyList = dutyService.findAllByScheduleId(scheduleId);
-                modelAndView.addObject("workplace", workplace);
-                modelAndView.addObject("schedule", schedule);
-                modelAndView.addObject("dutyList", dutyList);
-                modelAndView.setViewName("/duty/list");
-                return modelAndView;
-            }
-        }
-        modelAndView.setViewName("redirect:/error");
-        return modelAndView;
-    }
 
     @GetMapping("/add")
     public ModelAndView addDuty(@PathVariable Long workplaceId,
@@ -162,5 +143,50 @@ public class DutyController {
         modelAndView.setViewName("redirect:/error");
         return modelAndView;
     }
+
+    @GetMapping("/{dutyId}/findShift")
+    public ModelAndView dutyShift(@PathVariable Long workplaceId,
+                                  @PathVariable Long scheduleId,
+                                  @PathVariable Long dutyId,
+                                  @AuthenticationPrincipal CurrentUser currentUser) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        User user = userService.findUserByUsername(currentUser.getUsername());
+        Optional<Workplace> workplace = workplaceService.findById(workplaceId);
+        if (workplace.isPresent()) {
+            Optional<Schedule> schedule = scheduleService.findById(scheduleId);
+            if (schedule.isPresent()) {
+                Optional<Duty> duty = dutyService.findById(dutyId);
+                if (duty.isPresent()) {
+                    List<User> possibleShifts = new ArrayList<>();
+                    List<User> allUsersInSchedule = userService.findAllUsersToShift(workplaceId, schedule.get().getMonth(), schedule.get().getYear());
+                    for (User userToShift : allUsersInSchedule) {
+                        Set<Duty> userToShiftDuties = userToShift.getDuties();
+                        hasSameDuty = false;
+                        hasBeforeOrAfterDuty = false;
+                        for (Duty userToShiftDuty : userToShiftDuties) {
+
+                            if ((userToShiftDuty.getStart().equals(duty.get().getStart())) &&
+                                    (userToShiftDuty.getEnd().equals(duty.get().getEnd()))) {
+                                hasSameDuty = true;
+                            }
+                        }
+                        if (hasSameDuty == false) {
+                            possibleShifts.add(userToShift);
+                        }
+                    }
+
+                modelAndView.addObject("workplace", workplace.get());
+                modelAndView.addObject("schedule", schedule.get());
+                modelAndView.addObject("duty", duty.get());
+                modelAndView.addObject("possibleShifts", possibleShifts);
+                modelAndView.setViewName("duty/shiftList");
+                return modelAndView;
+            }
+        }
+    }
+        modelAndView.setViewName("redirect:/error");
+        return modelAndView;
+}
 
 }
